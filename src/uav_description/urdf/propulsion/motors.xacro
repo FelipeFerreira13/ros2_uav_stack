@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="motor_with_propeller">
+
+  <xacro:macro name="motor_with_propeller" params="name xyz rpy">
+
+    <xacro:property name="motor_mesh"     value="file://$(find uav_description)/meshes/propellers/motor.STL" />
+    <xacro:property name="propeller_mesh" value="file://$(find uav_description)/meshes/propellers/propeller.STL" />
+    
+    <xacro:property name="file_scale"         value="0.001 0.001 0.001" />  <!-- The STL file is in millimeters -->
+    <xacro:property name="model_offset_x"     value="-0.12" />              <!-- Fix the mesh model offset -->
+    <xacro:property name="model_offset_y"     value="-0.0875" />            <!-- Fix the mesh model offset -->
+    <xacro:property name="model_offset_z"     value="-0.05" />              <!-- Fix the mesh model offset -->
+    <xacro:property name="propeller_offset_z" value="0.02" />          
+
+
+    <!-- Motor link -->
+    <link name="${name}_motor_link">
+      <visual>
+        <origin xyz="${model_offset_x} ${model_offset_y} ${model_offset_z}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${motor_mesh}" scale="${file_scale}"/>
+        </geometry>
+        <material name="motor_black">
+          <color rgba="0.02 0.02 0.02 1.0"/>
+        </material>
+      </visual>
+
+      <collision>
+        <origin xyz="${model_offset_x} ${model_offset_y} ${model_offset_z}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${motor_mesh}" scale="${file_scale}"/>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <origin xyz="${model_offset_x} ${model_offset_y} ${model_offset_z}" rpy="0 0 0"/>
+        <mass value="0.055"/>
+        <inertia
+          ixx="0.00002"
+          ixy="0.0"
+          ixz="0.0"
+          iyy="0.00002"
+          iyz="0.0"
+          izz="0.00004"/>
+      </inertial>
+    </link>
+
+    <joint name="${name}_motor_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="${name}_motor_link"/>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+    </joint>
+
+    <!-- Propeller link -->
+    <link name="${name}_propeller_link">
+      <visual>
+        <origin xyz="${model_offset_x} ${model_offset_y} ${propeller_offset_z}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${propeller_mesh}" scale="${file_scale}"/>
+        </geometry>
+        <material name="propeller_gray">
+          <color rgba="0.15 0.15 0.15 1.0"/>
+        </material>
+      </visual>
+
+      <collision>
+        <origin xyz="${model_offset_x} ${model_offset_y} ${propeller_offset_z}" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${propeller_mesh}" scale="${file_scale}"/>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <origin xyz="${model_offset_x} ${model_offset_y} ${propeller_offset_z}" rpy="0 0 0"/>
+        <mass value="0.012"/>
+        <inertia
+          ixx="0.00001"
+          ixy="0.0"
+          ixz="0.0"
+          iyy="0.00001"
+          iyz="0.0"
+          izz="0.00002"/>
+      </inertial>
+    </link>
+
+    <joint name="${name}_propeller_joint" type="continuous">
+      <parent link="${name}_motor_link"/>
+      <child link="${name}_propeller_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+  </xacro:macro>
+
+</robot>

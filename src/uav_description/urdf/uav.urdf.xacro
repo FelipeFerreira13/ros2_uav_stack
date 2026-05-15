@@ -1,0 +1,27 @@
+<robot name="f450_uav" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find uav_description)/urdf/base/base.xacro"/>
+    <!-- <xacro:include filename="$(find uav_description)/urdf/sensors/lidar.xacro"/> -->
+    <!-- <xacro:include filename="$(find uav_description)/urdf/sensors/camera.xacro"/> -->
+    <xacro:include filename="$(find uav_description)/urdf/propulsion/motors.xacro"/>
+    <!-- <xacro:include filename="$(find uav_description)/urdf/gazebo/gazebo_plugins.xacro"/> -->
+
+    <!-- Base link -->
+    <link name="base_footprint"/>
+
+    <joint name="base_footprint_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <!--  Define Base Frame  -->
+    <xacro:f450_frame/>
+
+    <!--  Setup Motor and Propellers  -->
+    <xacro:motor_with_propeller name="front_left"  xyz=" 0.155  0.165 0.1" rpy="0 0 0"/>
+    <xacro:motor_with_propeller name="front_right" xyz=" 0.155 -0.160 0.1" rpy="0 0 0"/>
+    <xacro:motor_with_propeller name="rear_left"   xyz="-0.165  0.165 0.1" rpy="0 0 0"/>
+    <xacro:motor_with_propeller name="rear_right"  xyz="-0.165 -0.160 0.1" rpy="0 0 0"/>
+  
+</robot>
