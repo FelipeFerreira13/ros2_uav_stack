@@ -1,0 +1,11 @@
+float64 target_x
+float64 target_y
+float64 target_yaw
+---
+bool success
+string message
+---
+float64 current_x
+float64 current_y
+float64 distance_error
+float64 yaw_error
