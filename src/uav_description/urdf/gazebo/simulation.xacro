@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <gazebo>
+        <plugin name="uav_planar_move" filename="libgazebo_ros_planar_move.so">
+          <!-- <ros>
+            <namespace>/uav</namespace>
+            <remapping>cmd_vel:=cmd_vel</remapping>
+            <remapping>odom:=odom</remapping>
+          </ros> -->
+      
+          <body_name>base_footprint</body_name>
+          <odom_frame>odom</odom_frame>
+          <robot_base_frame>base_footprint</robot_base_frame>
+      
+          <publish_odom>true</publish_odom>
+          <publish_odom_tf>true</publish_odom_tf>
+      
+          <update_rate>50</update_rate>
+        </plugin>
+      </gazebo>
+
+</robot>
