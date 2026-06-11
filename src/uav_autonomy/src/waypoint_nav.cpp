@@ -43,9 +43,9 @@ private:
     RCLCPP_INFO(
       this->get_logger(),
       "Received waypoint request: x=%.2f y=%.2f yaw=%.2f",
-      goal->target_x,
-      goal->target_y,
-      goal->target_yaw);
+      goal->x,
+      goal->y,
+      goal->theta);
 
     return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
   }
@@ -109,8 +109,8 @@ private:
         continue;
       }
 
-      double dx = goal->target_x - current_x_;
-      double dy = goal->target_y - current_y_;
+      double dx = goal->x - current_x_;
+      double dy = goal->y - current_y_;
 
       double distance_error = std::sqrt(dx * dx + dy * dy);
       double target_heading = std::atan2(dy, dx);
@@ -134,7 +134,7 @@ private:
       else
       {
         linear_reach = true;
-        double yaw_error = normalizeAngle(goal->target_yaw - current_yaw_);
+        double yaw_error = normalizeAngle(goal->theta - current_yaw_);
 
         if (std::abs(yaw_error) > yaw_tolerance)
         {
@@ -159,7 +159,7 @@ private:
       feedback->current_x = current_x_;
       feedback->current_y = current_y_;
       feedback->distance_error = distance_error;
-      feedback->yaw_error = normalizeAngle(goal->target_yaw - current_yaw_);
+      feedback->yaw_error = normalizeAngle(goal->theta - current_yaw_);
 
       goal_handle->publish_feedback(feedback);
 
