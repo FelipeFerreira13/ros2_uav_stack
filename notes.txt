@@ -1,0 +1,13 @@
+
+ADD NEW MODEL TO PX$ AUTOPILOT
+
+Copy Iris model in cd ~/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models
+Adapt the meshes and names to your model
+
+Copy Iris in cd ~/PX4-Autopilot/ROMFS/px4fmu_common/init.d-posix/airframes
+
+Set SYS_AUTOSTART
+Add model to Cmakelist
+
+
+Add model name to src/modules/simulation/simulator_mavlink/sitl_targets_gazebo-classic.cmake
